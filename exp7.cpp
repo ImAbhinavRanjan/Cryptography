@@ -1,4 +1,4 @@
-// Write down a program for the encryption and decryption procedure of Rail Fence Cipher.
+// Implement a program that performs encryption and decryption for the given message using Rail Fence Cipher.
 
 #include <iostream>
 #include <bits/stdc++.h>
