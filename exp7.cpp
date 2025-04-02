@@ -88,9 +88,8 @@ void decrypt(string CT, int row)
 int main()
 {
 
-    string PT;
+    string PT,CT;
     int n;
-    string CT;
 
     int choice = 0;
     while (choice != 3)
