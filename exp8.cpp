@@ -1,3 +1,4 @@
+// Implement a program that performs encryption and decryption for the given message using RC4.
 #include <iostream>
 #include <string>
 using namespace std;
