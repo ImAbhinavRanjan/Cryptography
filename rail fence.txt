@@ -1,0 +1,32 @@
+import hashlib
+
+def calhash(pt):
+    pt=hashlib.sha256(pt.encode('utf-8')).hexdigest()
+    return pt
+
+def rail(pt,n):
+    col=len(pt)
+    matrix=[[""]*col for i in range (n)]
+    ind=-1
+    row=0
+    for i in range (0,col):
+        matrix[row][i] = pt[i]
+        if row==0 or row==n-1:
+            ind=-ind
+        row+=ind
+    ct=""
+    for i in range(0,n):
+        ct+="".join(ch for ch in matrix[i])
+    return ct    
+
+
+def main():
+      pt=input("Enter plain text: ")
+      n=int(input("Enter number of rows: "))
+      ct=rail(pt,n)
+      print(f"CT: {ct}")
+    
+
+
+if __name__=="__main__":
+    main()        

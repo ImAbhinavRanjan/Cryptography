@@ -1,0 +1,42 @@
+def vigenere_encrypt(pt, key):
+    index = 0
+    ct = ""
+    for char in pt:
+        if char.isalpha():
+            start = ord('A') if char.isupper() else ord('a')
+            start_key = ord('A') if key[index].isupper() else ord('a')
+            ct += chr(((ord(char) - start) + (ord(key[index]) - start_key)) % 26 + start)
+            index = index + 1
+            if(index == len(key)):
+                index = 0
+        else:
+            ct += char
+    return ct
+def vigenere_decrypt(ct, key):
+    index = 0
+    pt = ""
+    for char in ct:
+        if char.isalpha():
+            start = ord('A') if char.isupper() else ord('a')
+            start_key = ord('A') if key[index].isupper() else ord('a')
+            pt += chr(((ord(char) - start) - (ord(key[index]) - start_key) + 26) % 26 + start)
+            index += 1
+            if index == len(key):
+                index = 0
+        else:
+            pt += char
+    return pt
+def main():
+    message = input("Enter a Message :")
+    key = input("Enter Key :")
+    for char in key :
+        if char.isalpha() == False:
+            print("Invalid key")
+            exit()
+    cipher_text = vigenere_encrypt(message, key)
+    print("Encrypted Text :", cipher_text)
+    plain_text = vigenere_decrypt(cipher_text, key)
+    print("Decrypted Text :", plain_text)
+
+if __name__ == "__main__":
+    main()

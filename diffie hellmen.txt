@@ -1,0 +1,66 @@
+import hashlib
+
+def calhash(pt):
+    pt=hashlib.sha256(pt.encode('utf-8')).hexdigest()
+    return pt
+
+def checkprime(n):
+    if n<2:
+        return False
+    if n==2:
+        return True
+    for i in range(2,int(n**0.5)+1):
+        if n%i==0:
+            return False
+    return True    
+
+def checkrange(n,range):
+    if 1<n and n<range:
+        return True
+    return False
+
+def main():
+    while True:
+        p=int(input("Enter prime p: "))
+        if checkprime(p):
+            break
+        print("Invalid Input")
+
+    while True:
+        g=int (input("Enter g (1<g<p) and primitive root of p"))
+        if checkrange(g,p):
+            break
+        print("Invalid Input")
+
+    while True:
+        a=int(input("Enter a: (1<a<p): "))
+        if checkrange(a,p):
+            break
+        print("Invalid Input")  
+
+    while True:
+        b=int(input("Enter b: (1<b<p): "))
+        if checkrange(b,p):
+            break
+        print("Invalid Input")   
+
+    A=pow(g,a,p)
+    B=pow(g,b,p)
+
+    print(f"A : {A}")
+    print(f"B : {B}")
+
+    S1=pow(A,b,p)
+    S2=pow(B,a,p)
+
+    print(f"S1 : {S1}")
+    print(f"S2 : {S2}")
+
+    if S1==S2:
+        print("Verified")
+    else:
+        print("Not Verified") 
+
+
+if __name__=="__main__":
+    main()        

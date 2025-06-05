@@ -1,0 +1,80 @@
+import hashlib
+
+def calhash(pt):
+    pt=hashlib.sha256(pt.encode('utf-8')).hexdigest()
+    return pt
+
+def checkprime(n):
+    if n<2:
+        return False
+    if n==2:
+        return True
+    for i in range(2,int(n**0.5)+1):
+        if n%i==0:
+            return False
+    return True    
+
+def gcd(a,b):
+    if b==0:
+        return a
+    return gcd(b,a%b)
+
+def RSA():
+    while True:
+        p=int(input("Enter p (prime number):"))
+        if checkprime(p):
+            break
+        print ("Invalid Input")
+
+    while True:
+        q=int(input("Enter q (prime number):"))
+        if checkprime(q):
+            break
+        print ("Invalid Input") 
+
+    n=p*q 
+    phi=(p-1)*(q-1)
+
+    while True:
+        e=int(input("Enter e (1<e<phi) and co prime with phi"))
+        if 1<e and e<phi and gcd(e,phi)==1:
+            break
+        print("Invalid Input")
+
+    d=1
+    while not (e*d)%phi == 1:    
+        d+=1
+
+    print(f"Private Key:{{{e},{n}}}")
+    print(f"Public Key:{{{d},{n}}}")
+
+    return e,d,n    
+
+
+def main():
+    e,d,n=RSA()
+    pt=int(input("Enter pt (int):"))
+    ct=pow(pt,e,n)
+
+    print("----signing ds----")
+    pt_hash=calhash(str(pt))
+    disp=int(pt_hash,16)%n
+    print(f"Hash:{disp}")
+    ds=pow(disp,d,n)
+    print(f"ds:{ds}")
+
+
+    print("--verification--")
+    pt_hash=calhash(str(pt))
+    disp=int(pt_hash,16)%n
+    print(f"Hash:{disp}")
+    dec=pow(ds,e,n)
+    if dec==disp:
+        print("Verified")
+    else:
+        print("unverified")    
+    
+
+
+if __name__=="__main__":
+    main()        
